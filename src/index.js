@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { render } from "react-dom";
 import {
   Chart,
@@ -30,6 +30,8 @@ const cols = [
   { name: "收入", key: "income" }
 ];
 
+const getData = max => dataset.filter(d => d.sold < max);
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -54,12 +56,18 @@ class App extends React.Component {
       geomProps.color = "genre";
     }
 
+    //let [max, setMax] = useState(4);
     return (
       <div style={styles}>
-        <button onClick={this.handleBtnClick}>toggle</button>
+        {/* <button onClick={this.handleBtnClick}>toggle</button> */}
+        {/* <input
+          value={max}
+          type="number"
+          onChange={event => setMax(event.target.value)}
+        /> */}
         <Chart
           height={400}
-          data={dataset}
+          data={getData(400)}
           scale={cols.map(item => item.key)}
           forceFit={true}
         >
