@@ -1,15 +1,7 @@
 import React, { useState } from "react";
-import { render } from "react-dom";
-import {
-  Chart,
-  Geom,
-  Axis,
-  Tooltip,
-  Legend,
-  Coord,
-  GeomProps
-} from "bizcharts";
-import Hello from "./Hello";
+import ReactDOM from "react-dom";
+
+import { Chart, Geom, Axis, Tooltip, Legend } from "bizcharts";
 
 const styles = {
   fontFamily: "sans-serif",
@@ -32,54 +24,40 @@ const cols = [
 
 const getData = max => dataset.filter(d => d.sold < max);
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      showColor: true
-    };
-  }
-
-  handleBtnClick = () => {
-    this.setState({
-      showColor: !this.state.showColor
-    });
+const BarChart = ({ query }) => {
+  const geomProps = {
+    type: "interval",
+    position: "genre*sold"
   };
 
-  render() {
-    const geomProps: GeomProps = {
-      type: "interval",
-      position: "genre*sold"
-    };
+  geomProps.color = "genre";
 
-    if (this.state.showColor) {
-      geomProps.color = "genre";
-    }
+  //let [max, setMax] = useState(4);
+  return (
+    <div style={styles}>
+      {/* <input
+        value={max}
+        type="number"
+        onChange={event => setMax(event.target.value)}
+      /> */}
+      <Chart
+        height={400}
+        data={getData(400)}
+        scale={cols.map(item => item.key)}
+        forceFit={true}
+      >
+        <Axis name="genre" />
+        <Axis name="sold" />
+        <Legend position="top" dy={-20} />
+        <Tooltip />
+        <Geom {...geomProps} />
+      </Chart>
+    </div>
+  );
+};
 
-    //let [max, setMax] = useState(4);
-    return (
-      <div style={styles}>
-        {/* <button onClick={this.handleBtnClick}>toggle</button> */}
-        {/* <input
-          value={max}
-          type="number"
-          onChange={event => setMax(event.target.value)}
-        /> */}
-        <Chart
-          height={400}
-          data={getData(400)}
-          scale={cols.map(item => item.key)}
-          forceFit={true}
-        >
-          <Axis name="genre" />
-          <Axis name="sold" />
-          <Legend position="top" dy={-20} />
-          <Tooltip />
-          <Geom {...geomProps} />
-        </Chart>
-      </div>
-    );
-  }
+function App() {
+  return <BarChart />;
 }
 
-render(<App />, document.getElementById("root"));
+ReactDOM.render(<App />, document.getElementById("root"));
