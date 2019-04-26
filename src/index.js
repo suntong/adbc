@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { render } from "react-dom";
+import ReactDOM from "react-dom";
 import { Chart, Geom, Axis, Tooltip, Legend, GeomProps } from "bizcharts";
 
 const styles = {
@@ -31,10 +31,9 @@ const App = () => {
 
   geomProps.color = "genre";
 
-  //let [max, setMax] = useState(4);
+  // const [max, setMax] = useState(4);
   return (
     <div style={styles}>
-      {/* <button onClick={this.handleBtnClick}>toggle</button> */}
       {/* <input
           value={max}
           type="number"
@@ -56,4 +55,4 @@ const App = () => {
   );
 };
 
-render(<App />, document.getElementById("root"));
+ReactDOM.render(<App />, document.getElementById("root"));
