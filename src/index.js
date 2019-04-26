@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ReactDOM from "react-dom";
-import { Chart, Geom, Axis, Tooltip, Legend, GeomProps } from "bizcharts";
+
+import { Chart, Geom, Axis, Tooltip, Legend } from "bizcharts";
 
 const styles = {
   fontFamily: "sans-serif",
@@ -23,7 +24,7 @@ const cols = [
 
 const getData = max => dataset.filter(d => d.sold < max);
 
-const App = () => {
+const BarChart = ({ query }) => {
   const geomProps = {
     type: "interval",
     position: "genre*sold"
@@ -31,14 +32,14 @@ const App = () => {
 
   geomProps.color = "genre";
 
-  // const [max, setMax] = useState(4);
+  //let [max, setMax] = useState(4);
   return (
     <div style={styles}>
       {/* <input
-          value={max}
-          type="number"
-          onChange={event => setMax(event.target.value)}
-        /> */}
+        value={max}
+        type="number"
+        onChange={event => setMax(event.target.value)}
+      /> */}
       <Chart
         height={400}
         data={getData(400)}
@@ -54,5 +55,9 @@ const App = () => {
     </div>
   );
 };
+
+function App() {
+  return <BarChart />;
+}
 
 ReactDOM.render(<App />, document.getElementById("root"));
