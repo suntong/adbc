@@ -10,7 +10,7 @@ const styles = {
 
 const dataset = [
   { genre: "Sports", sold: 275, income: 2300 },
-  { genre: "Strategy", sold: 115, income: 667 },
+  { genre: "Strategy", sold: 95, income: 667 },
   { genre: "Action", sold: 120, income: 982 },
   { genre: "Shooter", sold: 350, income: 5271 },
   { genre: "Other", sold: 150, income: 3710 }
@@ -32,17 +32,17 @@ const BarChart = ({ query }) => {
 
   geomProps.color = "genre";
 
-  //let [max, setMax] = useState(4);
+  const [max, setMax] = useState(4);
   return (
     <div style={styles}>
-      {/* <input
+      <input
         value={max}
         type="number"
         onChange={event => setMax(event.target.value)}
-      /> */}
+      />
       <Chart
         height={400}
-        data={getData(400)}
+        data={getData(max * 100)}
         scale={cols.map(item => item.key)}
         forceFit={true}
       >
