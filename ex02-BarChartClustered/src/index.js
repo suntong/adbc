@@ -134,6 +134,10 @@ const Clusteredstacked = () => {
         return obj;
       }
     });
+
+  const ds = dv.rows;
+  const getData = max => ds.filter(d => d.population < max * 1000000);
+
   const colorMap = {
     "Under 5 Years": "#E3F4BF",
     "5 to 13 Years": "#BEF7C8",
@@ -155,14 +159,14 @@ const Clusteredstacked = () => {
       <input
         type="number"
         value={max}
-        min={0}
+        min={1}
         max={15}
         onChange={event => setMax(event.target.value)}
       />
       <hr />
       <Chart
         height={window.innerHeight}
-        data={dv}
+        data={getData(max)}
         scale={cols}
         padding={[20, 160, 80, 60]}
         forceFit
