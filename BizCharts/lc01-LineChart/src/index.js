@@ -1,18 +1,35 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import MyChart from "./MyChart";
+
+import { Chart, Axis, Geom, Tooltip } from "bizcharts";
+// View,
 
 import "./styles.css";
 
-function App() {
-  return (
-    <div className="App">
-      <h1>Hello CodeSandbox</h1>
-      <h2>Start editing to see some magic happen!</h2>
-      <MyChart />
-    </div>
-  );
-}
+const data = [
+  { year: "1991", value: 3 },
+  { year: "1992", value: 4 },
+  { year: "1993", value: 3.5 },
+  { year: "1994", value: 5 },
+  { year: "1995", value: 4.9 },
+  { year: "1996", value: 6 },
+  { year: "1997", value: 7 },
+  { year: "1998", value: 9 },
+  { year: "1999", value: 13 }
+];
 
-const rootElement = document.getElementById("root");
-ReactDOM.render(<App />, rootElement);
+const cols = {
+  value: { min: 0 },
+  year: { range: [0, 1] }
+};
+
+ReactDOM.render(
+  <Chart height={400} data={data} scale={cols} forceFit>
+    <Axis name="year" />
+    <Axis name="value" />
+    <Tooltip />
+    <Geom type="line" position="year*value" />
+    <Geom type="point" position="year*value" />
+  </Chart>,
+  document.getElementById("root")
+);
