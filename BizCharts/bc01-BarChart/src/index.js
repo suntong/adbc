@@ -3,6 +3,10 @@ import ReactDOM from "react-dom";
 
 import { Chart, Geom, Axis, Tooltip, Legend } from "bizcharts";
 
+import SelectList from "./components/SelectList";
+
+const chartOptions = [{ id: 1, name: "Filter" }, { id: 2, name: "Cap" }];
+
 const styles = {
   fontFamily: "sans-serif",
   textAlign: "center"
@@ -22,9 +26,17 @@ const cols = [
   { name: "收入", key: "income" }
 ];
 
-const getData = max => dataset.filter(d => d.sold < max);
+const getData = (dataset, chartOptionId, max) =>
+  chartOptionId === 1
+    ? dataset.filter(d => d.sold < max)
+    : [...dataset].map(d => {
+        d.sold = d.sold < max ? d.sold : max;
+        return d;
+      });
 
 const BarChart = ({ query }) => {
+  let [chartOptionId, setchartOptionId] = useState(1);
+
   const geomProps = {
     type: "interval",
     position: "genre*sold"
@@ -35,14 +47,21 @@ const BarChart = ({ query }) => {
   const [max, setMax] = useState(4);
   return (
     <div style={styles}>
+      <SelectList
+        selections={chartOptions}
+        onSelectChange={value => setchartOptionId(parseFloat(value))}
+        selectedValue={chartOptionId}
+      />
       <input
         value={max}
         type="number"
+        min={1}
+        max={5}
         onChange={event => setMax(event.target.value)}
       />
       <Chart
         height={400}
-        data={getData(max * 100)}
+        data={getData(dataset, chartOptionId, max * 100)}
         scale={cols.map(item => item.key)}
         forceFit={true}
       >
